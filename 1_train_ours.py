@@ -17,7 +17,7 @@ import json
 import numpy as np
 import pickle as pkl
 
-from tensorboard_logger import configure, log_value
+#from tensorboard_logger import configure, log_value
 
 
 CUDA = True if torch.cuda.is_available() else False
@@ -73,7 +73,7 @@ def train(dataset_name, conf):
         os.mkdir(save_point)
 
     # initialize and configure tensorboard
-    configure(os.path.join(save_point, datetime.now().strftime("%Y-%m-%d_%H_%M_%S")), flush_secs=5)
+   # configure(os.path.join(save_point, datetime.now().strftime("%Y-%m-%d_%H_%M_%S")), flush_secs=5)
 
     best_auc = 0.0
     best_hit10 = 0.0
@@ -140,15 +140,7 @@ def train(dataset_name, conf):
                 auc, hit_ns, ndcg_ns = test(model, dataset, conf)
                 hit5, hit10, hit20, hit40 = hit_ns
                 ndcg5, ndcg10, ndcg20, ndcg40 = ndcg_ns
-                log_value("auc", auc, step)
-                log_value("hit5", hit5, step)
-                log_value("hit10", hit10, step)
-                log_value("hit20", hit20, step)
-                log_value("hit40", hit40, step)
-                log_value("ndcg5", ndcg5, step)
-                log_value("ndcg10", ndcg10, step)
-                log_value("ndcg20", ndcg20, step)
-                log_value("ndcg40", ndcg40, step)
+
 
                 print("test finished\n%s: epoch %d" %(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), epoch))
                 print("test auc: %f,\n    hit5: %f, hit10: %f, hit20: %f, hit40: %f,\n    ndcg5: %f, ndcg10: %f, ndcg20: %f, ndcg40: %f" %(auc, hit5, hit10, hit20, hit40, ndcg5, ndcg10, ndcg20, ndcg40))
